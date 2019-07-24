@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="productss_list">
+      <field name="name">Products list</field>
+      <field name="model">productss.productss</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+          <field name="price"/>
+        </tree>
+      </field>
+    </record>
+   
+  
+    <record model="ir.actions.act_window" id="productss_action_window">
+      <field name="name">List Window</field>
+      <field name="res_model">mods.mods</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="productss_action2_window">
+      <field name="name">Products Window</field>
+      <field name="res_model">productss.productss</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="productss_action3_window">
+      <field name="name">Stock Window</field>
+      <field name="res_model">stockk.stockk</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="productss_action4_window">
+      <field name="name">Client Window</field>
+      <field name="res_model">clientt.clientt</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="productss_action5_window">
+      <field name="name">Fournisseur Window</field>
+      <field name="res_model">fournisseurr.fournisseurr</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+
+    
+    <menuitem name="productss" id="productss_menu_root"/>
+    
+   
+    
+    <menuitem name="Menu" id="productss_menu_1" parent="productss_menu_root"/>
+    
+    <menuitem name="List" id="productss_menu_2_list" parent="productss_menu_1"
+              action="productss_action_window"/>
+              
+    <menuitem name="Products" id="productss_menu_2" parent="productss_menu_root"
+              action="productss_action2_window"/>
+    <menuitem name="Stock" id="productss_menu_3" parent="productss_menu_root"
+              action="productss_action3_window"/>
+    <menuitem name="Client" id="productss_menu_4" parent="productss_menu_root"
+              action="productss_action4_window"/>
+    <menuitem name="Fournisseur" id="productss_menu_5" parent="productss_menu_root"
+              action="productss_action5_window"/>
+              
+   
+       
+  </data>
+</odoo>
