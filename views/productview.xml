@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
+    <!-- Product list  -->
     
     <record model="ir.ui.view" id="productss_list">
       <field name="name">Products list</field>
@@ -39,45 +39,94 @@
         </tree>
       </field>
     </record>
+
+    <!-- Inventaire list -->
+    <record model="ir.ui.view" id="inventairee_list">
+      <field name="name">Inventaire list</field>
+      <field name="model">inventairee.inventairee</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id_stock"/>
+          <field name="id_product"/>
+          <field name="qte"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Achat list -->
+    <record model="ir.ui.view" id="inventairee_list">
+      <field name="name">Achat list</field>
+      <field name="model">achatt.achatt</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id_fournisseur"/>
+          <field name="id_product"/>
+          <field name="qte"/>
+        </tree>
+      </field>
+    </record>
+
    
-  
+  <!-- Test -->
     <record model="ir.actions.act_window" id="productss_action_window">
       <field name="name">List Window</field>
       <field name="res_model">mods.mods</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Action Products -->
     <record model="ir.actions.act_window" id="productss_action2_window">
       <field name="name">Products Window</field>
       <field name="res_model">productss.productss</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Action Stock -->
     <record model="ir.actions.act_window" id="productss_action3_window">
       <field name="name">Stock Window</field>
       <field name="res_model">stockk.stockk</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Action Client -->
     <record model="ir.actions.act_window" id="productss_action4_window">
       <field name="name">Client Window</field>
       <field name="res_model">clientt.clientt</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Action Fourni -->
     <record model="ir.actions.act_window" id="productss_action5_window">
       <field name="name">Fournisseur Window</field>
       <field name="res_model">fournisseurr.fournisseurr</field>
       <field name="view_mode">tree,form</field>
     </record>
-    
 
+    <!-- Action Inventaire -->
+    <record model="ir.actions.act_window" id="productss_action6_window">
+      <field name="name">Inventaire Window</field>
+      <field name="res_model">inventairee.inventairee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action Achat -->
+    <record model="ir.actions.act_window" id="productss_action7_window">
+      <field name="name">Achat Window</field>
+      <field name="res_model">achatt.achatt</field>
+      <field name="view_mode">tree,form</field>
+    </record>
     
+    <!-- Menu items parent -->
     <menuitem name="productss" id="productss_menu_root"/>
-    
-   
     
     <menuitem name="Menu" id="productss_menu_1" parent="productss_menu_root"/>
     
+    <!-- Menu items Child Childs -->
     <menuitem name="List" id="productss_menu_2_list" parent="productss_menu_1"
               action="productss_action_window"/>
-              
+    
+    <!-- Menu items Childs -->
+       
     <menuitem name="Products" id="productss_menu_2" parent="productss_menu_root"
               action="productss_action2_window"/>
     <menuitem name="Stock" id="productss_menu_3" parent="productss_menu_root"
@@ -86,8 +135,10 @@
               action="productss_action4_window"/>
     <menuitem name="Fournisseur" id="productss_menu_5" parent="productss_menu_root"
               action="productss_action5_window"/>
-              
-   
+    <menuitem name="Inventaire" id="productss_menu_6" parent="productss_menu_root"
+              action="productss_action6_window"/>         
+    <menuitem name="Achat" id="productss_menu_7" parent="productss_menu_root"
+              action="productss_action7_window"/> 
        
   </data>
 </odoo>

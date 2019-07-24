@@ -43,7 +43,21 @@ class fournisseurr(models.Model):
       email_fourni = fields.Char()
       adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
+      products_list= fields.Many2many()
 
+class inventairee(models.Model):
+      _name = 'inventairee.inventairee'
+      id_stock = fields.Many2one(comodel_name='stockk.stockk')
+      id_product = fields.Many2one(comodel_name='productss.productss')
+      qte = fields.Integer()
+      _sql_constraints = [('id_product', 'unique(id_product)',
+                     'Produit existe déja'),]
+
+class achatt(models.Model):
+      _name = 'achatt.achatt'
+      id_fournisseur = fields.Many2one(comodel_name='fournisseurr.fournisseurr')
+      id_product = fields.Many2one(comodel_name='productss.productss')
+      qte = fields.Integer()
 
 
       
