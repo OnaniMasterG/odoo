@@ -33,7 +33,7 @@ class productss(models.Model):
 class clientt(models.Model):
       _name = 'clientt.clientt'
       name_client = fields.Char()
-      email_client = fields.Text()
+      email_client = fields.Char()
       adresse_client = fields.Float()
       numerotel_client = fields.Char(size=13)
 
@@ -41,8 +41,8 @@ class clientt(models.Model):
 class fournisseurr(models.Model):
       _name = 'fournisseurr.fournisseurr'
       name_fourni = fields.Char()
-      email_fourni = fields.Text()
-      adresse_fourni = fields.Float()
+      email_fourni = fields.Char()
+      adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
 
 
