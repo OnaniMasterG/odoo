@@ -33,8 +33,8 @@ class productss(models.Model):
 class clientt(models.Model):
       _name = 'clientt.clientt'
       name_client = fields.Char()
-      email_client = fields.Char()
-      adresse_client = fields.Text()
+      email_client = fields.Text()
+      adresse_client = fields.Float()
       numerotel_client = fields.Char(size=13)
 
 
