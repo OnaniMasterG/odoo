@@ -27,14 +27,13 @@ class productss(models.Model):
       name = fields.Char()
       description = fields.Text()
       price = fields.Float()
-      Nom_stock=fields.Many2one(comodel_name='stockk.stockk')
  
 
 class clientt(models.Model):
       _name = 'clientt.clientt'
       name_client = fields.Char()
       email_client = fields.Char()
-      adresse_client = fields.Float()
+      adresse_client = fields.Char()
       numerotel_client = fields.Char(size=13)
 
 

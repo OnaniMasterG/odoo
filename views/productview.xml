@@ -13,6 +13,32 @@
         </tree>
       </field>
     </record>
+<!--  Client list -->
+    <record model="ir.ui.view" id="clientt_list">
+      <field name="name">Client list</field>
+      <field name="model">clientt.clientt</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name_client"/>
+          <field name="email_client"/>
+          <field name="adresse_client"/>
+          <field name="numerotel_client"/>
+        </tree>
+      </field>
+    </record>
+<!-- Fourni list -->
+    <record model="ir.ui.view" id="fournisseurr_list">
+      <field name="name">Fourni list</field>
+      <field name="model">fournisseurr.fournisseurr</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name_fourni"/>
+          <field name="email_fourni"/>
+          <field name="adresse_fourni"/>
+          <field name="numerotel_fourni"/>
+        </tree>
+      </field>
+    </record>
    
   
     <record model="ir.actions.act_window" id="productss_action_window">
