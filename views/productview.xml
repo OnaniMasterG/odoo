@@ -1,6 +1,15 @@
 <odoo>
   <data>
-
+  <!-- Product kanban -->
+<record model="ir.ui.view" id="productss_list">
+      <field name="name">Products list</field>
+      <field name="model">productss.productss</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="name"/>
+        </kanban>
+      </field>
+    </record>
   <!-- Graph -->
     <record model="ir.ui.view" id="product_graph">
     <field name="name">productss.productss.graph</field>
@@ -67,6 +76,17 @@
       </field>
     </record>
 
+    <!-- Commande list -->
+    <record model="ir.ui.view" id="commandee_list">
+      <field name="name">Commande list</field>
+      <field name="model">commandee.commandee</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
     <!-- Achat list -->
     <record model="ir.ui.view" id="achatt_list">
       <field name="name">Achat list</field>
@@ -74,8 +94,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="id_fournisseur"/>
-          <field name="id_product"/>
-          <field name="qte"/>
+          <field name="id_commande"/>
         </tree>
       </field>
     </record>
@@ -93,19 +112,33 @@
       </field>
     </record>
 
-   
+    <!-- cmdpdct list -->
+    <record model="ir.ui.view" id="cmdpdct_list">
+      <field name="name">Cmd pdct list</field>
+      <field name="model">cmdpdct.cmdpdct</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="id_product"/>
+          <field name="id_commande"/>
+          <field name="qte"/>
+        </tree>
+      </field>
+    </record>
+
+  
   <!-- Test -->
     <record model="ir.actions.act_window" id="productss_action_window">
       <field name="name">List Window</field>
       <field name="res_model">mods.mods</field>
       <field name="view_mode">tree,form</field>
+      
     </record>
 
     <!-- Action Products -->
     <record model="ir.actions.act_window" id="productss_action2_window">
       <field name="name">Products Window</field>
       <field name="res_model">productss.productss</field>
-      <field name="view_mode">tree,form,graph</field>
+      <field name="view_mode">tree,form,graph,kanban</field>
     </record>
 
 
@@ -145,6 +178,19 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <!-- Action Commande -->
+    <record model="ir.actions.act_window" id="productss_action9_window">
+      <field name="name">Inventaire Window</field>
+      <field name="res_model">commandee.commandee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action Produits Commande -->
+    <record model="ir.actions.act_window" id="productss_action10_window">
+      <field name="name">Pdct Cmd Window</field>
+      <field name="res_model">cmdpdct.cmdpdct</field>
+      <field name="view_mode">tree,form</field>
+    </record>
     
     <!-- Menu items parent -->
     <menuitem name="productss" id="productss_menu_root"/>
@@ -170,6 +216,10 @@
               action="productss_action7_window"/> 
     <menuitem name="Charge" id="productss_menu_8" parent="productss_menu_root"
               action="productss_action8_window"/> 
+    <menuitem name="Commande" id="productss_menu_9" parent="productss_menu_root"
+              action="productss_action9_window"/> 
+    <menuitem name="CmdPdct" id="productss_menu_10" parent="productss_menu_root"
+              action="productss_action10_window"/> 
 
   </data>
 </odoo>
