@@ -4,7 +4,6 @@ from odoo import models, fields, api
 
 class mods(models.Model):
       _name = 'mods.mods'
-
       name = fields.Char()
       value = fields.Integer()
       value2 = fields.Float(compute="_value_pc", store=True)
@@ -47,11 +46,11 @@ class fournisseurr(models.Model):
 
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
-      id_stock = fields.Many2one(comodel_name='stockk.stockk')
       id_product = fields.Many2one(comodel_name='productss.productss')
       qte = fields.Integer()
       _sql_constraints = [('id_product', 'unique(id_product)',
                      'Produit existe déja'),]
+
 
 class achatt(models.Model):
       _name = 'achatt.achatt'
