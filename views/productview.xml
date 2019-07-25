@@ -1,5 +1,19 @@
 <odoo>
   <data>
+
+  <!-- Graph -->
+    <record model="ir.ui.view" id="product_graph">
+    <field name="name">productss.productss.graph</field>
+    <field name="model">productss.productss</field>
+    <field name="arch" type="xml">
+        <graph string="Quotation" type="bar">
+            <field name="name" group="True"/>
+            <field name="price" type="measure"/>
+            <field name="create_date" interval="day" />
+        </graph>
+    </field>
+    </record>
+
     <!-- Product list  -->
     
     <record model="ir.ui.view" id="productss_list">
@@ -38,6 +52,7 @@
           <field name="numerotel_fourni"/>
         </tree>
       </field>
+     
     </record>
 
     <!-- Inventaire list -->
@@ -65,6 +80,19 @@
       </field>
     </record>
 
+    <!-- Charge list -->
+    <record model="ir.ui.view" id="chargee_list">
+      <field name="name">Charge list</field>
+      <field name="model">chargee.chargee</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nom"/>
+          <field name="description"/>
+          <field name="prix"/>
+        </tree>
+      </field>
+    </record>
+
    
   <!-- Test -->
     <record model="ir.actions.act_window" id="productss_action_window">
@@ -77,7 +105,7 @@
     <record model="ir.actions.act_window" id="productss_action2_window">
       <field name="name">Products Window</field>
       <field name="res_model">productss.productss</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,graph</field>
     </record>
 
 
@@ -102,12 +130,21 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    
     <!-- Action Achat -->
     <record model="ir.actions.act_window" id="productss_action7_window">
       <field name="name">Achat Window</field>
       <field name="res_model">achatt.achatt</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Action Charge -->
+    <record model="ir.actions.act_window" id="productss_action8_window">
+      <field name="name">Achat Window</field>
+      <field name="res_model">chargee.chargee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     
     <!-- Menu items parent -->
     <menuitem name="productss" id="productss_menu_root"/>
@@ -131,6 +168,8 @@
               action="productss_action6_window"/>         
     <menuitem name="Achat" id="productss_menu_7" parent="productss_menu_root"
               action="productss_action7_window"/> 
-       
+    <menuitem name="Charge" id="productss_menu_8" parent="productss_menu_root"
+              action="productss_action8_window"/> 
+
   </data>
 </odoo>

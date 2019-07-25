@@ -12,12 +12,6 @@ class mods(models.Model):
       @api.depends('value')
       def _value_pc(self):
           self.value2 = float(self.value) / 100
-
-
-class stockk(models.Model):
-      _name = 'stockk.stockk'
-      name = fields.Char()
-      description = fields.Text()
       
       
     
@@ -50,6 +44,12 @@ class inventairee(models.Model):
       qte = fields.Integer()
       _sql_constraints = [('id_product', 'unique(id_product)',
                      'Produit existe déja'),]
+
+class chargee(models.Model):
+      _name = 'chargee.chargee'
+      nom = fields.Char()
+      description = fields.Text()
+      prix= fields.Float()
 
 
 class achatt(models.Model):
