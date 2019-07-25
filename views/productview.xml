@@ -54,7 +54,7 @@
     </record>
 
     <!-- Achat list -->
-    <record model="ir.ui.view" id="inventairee_list">
+    <record model="ir.ui.view" id="achatt_list">
       <field name="name">Achat list</field>
       <field name="model">achatt.achatt</field>
       <field name="arch" type="xml">

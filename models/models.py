@@ -43,7 +43,7 @@ class fournisseurr(models.Model):
       email_fourni = fields.Char()
       adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
-      products_list= fields.Many2many()
+      
 
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
