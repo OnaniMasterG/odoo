@@ -54,22 +54,25 @@ class chargee(models.Model):
 # Cree commande avec un nom
 class commandee(models.Model):
       _name = 'commandee.commandee'
-      name = fields.Char()
-      id_product = fields.Many2one('productss.productss')
-      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd')
+      name = fields.Char( required=True, index=True, copy=False, default='New')
+      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
+      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
+
+      _sql_constraints = [('name', 'unique(name)',
+                     'Commande existe déja'),]
+      @api.model
+      def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order') or '/'
+        return super(commandee, self).create(vals)
+
 
 class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'
-      name = fields.Char()
       id_product = fields.Many2one('productss.productss')
       id_cmd = fields.Many2one('commandee.commandee')
       qte = fields.Integer()
 
-# Associer des differents fournisseur a une cmd
-class achatt(models.Model):
-      _name = 'achatt.achatt'
-      id_fournisseur = fields.Many2one(comodel_name='fournisseurr.fournisseurr')
-      id_commande = fields.Many2one(comodel_name='commandee.commandee')
+
       
 
 

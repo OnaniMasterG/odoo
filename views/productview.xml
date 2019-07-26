@@ -82,40 +82,32 @@
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
+          <field name="name" readonly="1"/>
         </tree>
       </field>
     </record>
 
-    <!-- Commande form -->
-    <record model="ir.ui.view" id="commandee_list">
-      <field name="name">Commande list</field>
+   <!--   Commande form -->
+    <record model="ir.ui.view" id="commandee_form">
+      <field name="name">Commande form</field>
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
         <form string="cmdForm">
             <sheet>
                 <group>
-                  <field name="name"/>
+                  <field name="id_fournisseur"/>
                 </group>
                 <group>
-                  <field name="id_product"/>
+                  <field name="id_cmdqte"/>
                 </group>
             </sheet>
         </form>
       </field>
-    </record>
+    </record> 
 
-    <!-- Achat list -->
-    <record model="ir.ui.view" id="achatt_list">
-      <field name="name">Achat list</field>
-      <field name="model">achatt.achatt</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="id_fournisseur"/>
-          <field name="id_commande"/>
-        </tree>
-      </field>
-    </record>
+
+
+    
 
     <!-- Charge list -->
     <record model="ir.ui.view" id="chargee_list">
@@ -132,11 +124,23 @@
 
   <!-- Commande list -->
     <record model="ir.ui.view" id="chargee_list">
-      <field name="name">Commande list</field>
+      <field name="name">Achat list</field>
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- cmdpdct list -->
+    <record model="ir.ui.view" id="chargee_list">
+      <field name="name">Commande list</field>
+      <field name="model">cmdqte.cmdqte</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="id_product"/>
+          <field name="qte"/>
         </tree>
       </field>
     </record>
@@ -179,12 +183,7 @@
     </record>
 
     
-    <!-- Action Achat -->
-    <record model="ir.actions.act_window" id="productss_action7_window">
-      <field name="name">Achat Window</field>
-      <field name="res_model">achatt.achatt</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+
 
     <!-- Action Charge -->
     <record model="ir.actions.act_window" id="productss_action8_window">
@@ -195,7 +194,7 @@
 
     <!-- Action Commande -->
     <record model="ir.actions.act_window" id="productss_action9_window">
-      <field name="name">Commande Window</field>
+      <field name="name">Achat Window</field>
       <field name="res_model">commandee.commandee</field>
       <field name="view_mode">tree,form</field>
     </record>
@@ -221,11 +220,10 @@
               action="productss_action5_window"/>
     <menuitem name="Inventaire" id="productss_menu_6" parent="productss_menu_root"
               action="productss_action6_window"/>         
-    <menuitem name="Achat" id="productss_menu_7" parent="productss_menu_root"
-              action="productss_action7_window"/> 
+
     <menuitem name="Charge" id="productss_menu_8" parent="productss_menu_root"
               action="productss_action8_window"/> 
-    <menuitem name="Commande" id="productss_menu_9" parent="productss_menu_root"
+    <menuitem name="Achat" id="productss_menu_9" parent="productss_menu_root"
               action="productss_action9_window"/> 
 
 
