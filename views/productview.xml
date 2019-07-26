@@ -87,6 +87,24 @@
       </field>
     </record>
 
+    <!-- Commande form -->
+    <record model="ir.ui.view" id="commandee_list">
+      <field name="name">Commande list</field>
+      <field name="model">commandee.commandee</field>
+      <field name="arch" type="xml">
+        <form string="cmdForm">
+            <sheet>
+                <group>
+                  <field name="name"/>
+                </group>
+                <group>
+                  <field name="id_product"/>
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
     <!-- Achat list -->
     <record model="ir.ui.view" id="achatt_list">
       <field name="name">Achat list</field>
@@ -108,19 +126,6 @@
           <field name="nom"/>
           <field name="description"/>
           <field name="prix"/>
-        </tree>
-      </field>
-    </record>
-
-    <!-- cmdpdct list -->
-    <record model="ir.ui.view" id="cmdpdct_list">
-      <field name="name">Cmd pdct list</field>
-      <field name="model">cmdpdct.cmdpdct</field>
-      <field name="arch" type="xml">
-        <tree editable="bottom">
-          <field name="id_product"/>
-          <field name="id_commande"/>
-          <field name="qte"/>
         </tree>
       </field>
     </record>
@@ -185,12 +190,6 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- Action Produits Commande -->
-    <record model="ir.actions.act_window" id="productss_action10_window">
-      <field name="name">Pdct Cmd Window</field>
-      <field name="res_model">cmdpdct.cmdpdct</field>
-      <field name="view_mode">tree,form</field>
-    </record>
     
     <!-- Menu items parent -->
     <menuitem name="productss" id="productss_menu_root"/>
@@ -218,8 +217,7 @@
               action="productss_action8_window"/> 
     <menuitem name="Commande" id="productss_menu_9" parent="productss_menu_root"
               action="productss_action9_window"/> 
-    <menuitem name="CmdPdct" id="productss_menu_10" parent="productss_menu_root"
-              action="productss_action10_window"/> 
+
 
   </data>
 </odoo>
