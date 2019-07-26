@@ -19,7 +19,7 @@ class productss(models.Model):
       _name = 'productss.productss'
       name = fields.Char()
       description = fields.Text()
-      price = fields.Float()
+      price =fields.Float() 
  
 
 class clientt(models.Model):
@@ -71,7 +71,14 @@ class cmdqte(models.Model):
       id_product = fields.Many2one('productss.productss')
       id_cmd = fields.Many2one('commandee.commandee')
       qte = fields.Integer()
-
+      price_product = fields.Float()
+      total = fields.Float(compute="_value_pc", store=True)
+      
+      @api.depends('price_product','qte')
+      def _value_pc(self):
+          for line in self:
+             line.total = float(line.qte) *  line.price_product 
+     
 
       
 
