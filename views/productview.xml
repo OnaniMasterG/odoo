@@ -130,6 +130,16 @@
       </field>
     </record>
 
+  <!-- Commande list -->
+    <record model="ir.ui.view" id="chargee_list">
+      <field name="name">Commande list</field>
+      <field name="model">commandee.commandee</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
   
   <!-- Test -->
     <record model="ir.actions.act_window" id="productss_action_window">
@@ -185,7 +195,7 @@
 
     <!-- Action Commande -->
     <record model="ir.actions.act_window" id="productss_action9_window">
-      <field name="name">Inventaire Window</field>
+      <field name="name">Commande Window</field>
       <field name="res_model">commandee.commandee</field>
       <field name="view_mode">tree,form</field>
     </record>
