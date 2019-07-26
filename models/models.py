@@ -55,8 +55,15 @@ class chargee(models.Model):
 class commandee(models.Model):
       _name = 'commandee.commandee'
       name = fields.Char()
-      id_product = fields.Many2many('productss.productss')
+      id_product = fields.Many2one('productss.productss')
+      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd')
 
+class cmdqte(models.Model):
+      _name = 'cmdqte.cmdqte'
+      name = fields.Char()
+      id_product = fields.Many2one('productss.productss')
+      id_cmd = fields.Many2one('commandee.commandee')
+      qte = fields.Integer()
 
 # Associer des differents fournisseur a une cmd
 class achatt(models.Model):

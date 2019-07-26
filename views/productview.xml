@@ -188,7 +188,7 @@
 
     <!-- Action Charge -->
     <record model="ir.actions.act_window" id="productss_action8_window">
-      <field name="name">Achat Window</field>
+      <field name="name">Charge Window</field>
       <field name="res_model">chargee.chargee</field>
       <field name="view_mode">tree,form</field>
     </record>
