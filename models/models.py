@@ -57,14 +57,15 @@ class commandee(models.Model):
       name = fields.Char( required=True, index=True, copy=False, default='New')
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
+      totalcmd = fields.Float() 
 
-      _sql_constraints = [('name', 'unique(name)',
-                     'Commande existe déja'),]
+     
+
       @api.model
       def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order') or '/'
         return super(commandee, self).create(vals)
-
+  
 
 class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'

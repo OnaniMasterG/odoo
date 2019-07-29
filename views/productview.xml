@@ -83,6 +83,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="totalcmd"/>
         </tree>
       </field>
     </record>
@@ -96,6 +97,9 @@
             <sheet>
                 <group>
                   <field name="id_fournisseur"/>
+                </group>
+                <group>
+                  <field name="totalcmd"/>
                 </group>
                 <group>
                   <field name="id_cmdqte"/>
@@ -129,6 +133,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="totalcmd"/>
         </tree>
       </field>
     </record>
