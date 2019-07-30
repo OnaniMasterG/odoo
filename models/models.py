@@ -20,7 +20,9 @@ class productss(models.Model):
       name = fields.Char()
       description = fields.Text()
       price =fields.Float() 
- 
+      
+      
+
 
 class clientt(models.Model):
       _name = 'clientt.clientt'
@@ -41,9 +43,13 @@ class fournisseurr(models.Model):
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
       id_product = fields.Many2one(comodel_name='productss.productss')
-      qte = fields.Integer()
-      _sql_constraints = [('id_product', 'unique(id_product)',
-                     'Produit existe déja'),]
+      qte = fields.Integer(compute="_value_qte", store=True)
+   
+      _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
+      
+     
+               
+
 
 class chargee(models.Model):
       _name = 'chargee.chargee'
@@ -57,7 +63,13 @@ class commandee(models.Model):
       name = fields.Char( required=True, index=True, copy=False, default='New')
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
- 
+      totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      
+      @api.depends('id_cmdqte.total')
+      def _value_cmd(self):
+          for order in self:
+            for line in order.id_cmdqte:
+                self.totalcmd += line.total
 
       @api.model
       def create(self, vals):
