@@ -57,9 +57,7 @@ class commandee(models.Model):
       name = fields.Char( required=True, index=True, copy=False, default='New')
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
-      totalcmd = fields.Float() 
-
-     
+ 
 
       @api.model
       def create(self, vals):
@@ -74,6 +72,7 @@ class cmdqte(models.Model):
       qte = fields.Integer()
       price_product = fields.Float()
       total = fields.Float(compute="_value_pc", store=True)
+
       
       @api.depends('price_product','qte')
       def _value_pc(self):
