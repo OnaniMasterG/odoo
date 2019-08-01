@@ -17,13 +17,14 @@ class mods(models.Model):
     
 class productss(models.Model):
       _name = 'productss.productss'
+      _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
       name = fields.Char()
       description = fields.Text()
       price =fields.Float() 
-      
-      
+      qte = fields.Integer()
 
-
+      
+    
 class clientt(models.Model):
       _name = 'clientt.clientt'
       name_client = fields.Char()
@@ -42,12 +43,23 @@ class fournisseurr(models.Model):
 
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
-      id_product = fields.Many2one(comodel_name='productss.productss')
-      qte = fields.Integer()
+      name = fields.Char()
+      id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true')
+
    
-      _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
       
-     
+      
+class pdtinventory(models.Model):
+      _name = 'pdtinventory.pdtinventory'
+      id_product = fields.Many2one('productss.productss',ondelete="cascade")
+      id_inv = fields.Many2one('inventairee.inventairee',ondelete="cascade")
+      theoricalqte = fields.Integer(string="Quantité Théorique :",compute="_value_theoqte", store=True)
+      realqte = fields.Integer(string="Quantité Réel :")
+
+      @api.depends('id_product.qte')
+      def _value_theoqte(self):
+          for line in self:
+             line.theoricalqte = self.id_product.qte
                
 
 

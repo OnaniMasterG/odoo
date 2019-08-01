@@ -70,8 +70,7 @@
       <field name="model">inventairee.inventairee</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="id_product"/>
-          <field name="qte"/>
+          <field name="name"/>
         </tree>
       </field>
     </record>
@@ -106,7 +105,18 @@
       </field>
     </record> 
 
-
+<!-- PdtInventory list -->
+    <record model="ir.ui.view" id="PdtInventory_list">
+      <field name="name">PdtInventory list</field>
+      <field name="model">pdtinventory.pdtinventory</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="id_product"/>
+          <field name="theoricalqte"/>
+          <field name="realqte"/>
+        </tree>
+      </field>
+    </record>
 
     
 
