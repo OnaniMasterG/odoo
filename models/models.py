@@ -73,7 +73,7 @@ class chargee(models.Model):
 class commandee(models.Model):
       _name = 'commandee.commandee'
       name = fields.Char( required=True, index=True, copy=False, default='New')
-      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
+      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade")
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
       
@@ -91,8 +91,8 @@ class commandee(models.Model):
 
 class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'
-      id_product = fields.Many2one('productss.productss')
-      id_cmd = fields.Many2one('commandee.commandee')
+      id_product = fields.Many2one('productss.productss',ondelete="cascade")
+      id_cmd = fields.Many2one('commandee.commandee',ondelete="cascade")
       qte = fields.Integer()
       price_product = fields.Float()
       total = fields.Float(compute="_value_pc", store=True)
