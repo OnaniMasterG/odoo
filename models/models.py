@@ -17,14 +17,13 @@ class mods(models.Model):
     
 class productss(models.Model):
       _name = 'productss.productss'
-      _sql_constraints = [('name', 'unique(name)','Produit existe déja'),]
       name = fields.Char()
       description = fields.Text()
       price =fields.Float() 
-      qte = fields.Integer()
       
       
-     
+
+
 class clientt(models.Model):
       _name = 'clientt.clientt'
       name_client = fields.Char()
@@ -40,27 +39,17 @@ class fournisseurr(models.Model):
       adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
       
-class pdtinventory(models.Model):
-      _name = 'pdtinventory.pdtinventory'
-      id_product = fields.Many2one('productss.productss',ondelete="cascade")
-      id_inv = fields.Many2one('inventairee.inventairee',ondelete="cascade")
-      theoricalqte = fields.Integer(string="Quantité Théorique :",compute="_value_theoqte", store=True)
-      realqte = fields.Integer(string="Quantité Réel :")
-
-      @api.depends('id_product.qte')
-      def _value_theoqte(self):
-          for line in self:
-             line.theoricalqte = self.id_product.qte
-      
-
-
 
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
-      name = fields.Char()
-      id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true')
+      id_product = fields.Many2one(comodel_name='productss.productss')
+      qte = fields.Integer()
+   
+      _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
       
-      
+     
+               
+
 
 class chargee(models.Model):
       _name = 'chargee.chargee'
@@ -72,7 +61,7 @@ class chargee(models.Model):
 class commandee(models.Model):
       _name = 'commandee.commandee'
       name = fields.Char( required=True, index=True, copy=False, default='New')
-      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade")
+      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true')
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
       
@@ -91,7 +80,7 @@ class commandee(models.Model):
 class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'
       id_product = fields.Many2one('productss.productss')
-      id_cmd = fields.Many2one('commandee.commandee',ondelete="cascade")
+      id_cmd = fields.Many2one('commandee.commandee')
       qte = fields.Integer()
       price_product = fields.Float()
       total = fields.Float(compute="_value_pc", store=True)

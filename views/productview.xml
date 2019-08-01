@@ -33,11 +33,9 @@
           <field name="name"/>
           <field name="description"/>
           <field name="price"/>
-          <field name="qte"/>
         </tree>
       </field>
     </record>
-
 <!--  Client list -->
     <record model="ir.ui.view" id="clientt_list">
       <field name="name">Client list</field>
@@ -72,7 +70,8 @@
       <field name="model">inventairee.inventairee</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
+          <field name="id_product"/>
+          <field name="qte"/>
         </tree>
       </field>
     </record>
@@ -145,19 +144,6 @@
           <field name="qte"/>
           <field name="price_product"/>
           <field name="total" sum='totalcmd'/>
-        </tree>
-      </field>
-    </record>
-
-    <!-- cmdpdct list -->
-    <record model="ir.ui.view" id="chargee_list">
-      <field name="name">PdtInventory list</field>
-      <field name="model">pdtinventory.pdtinventory</field>
-      <field name="arch" type="xml">
-        <tree editable="bottom">
-          <field name="id_product"/>
-          <field name="theoricalqte"/>
-          <field name="realqte"/>
         </tree>
       </field>
     </record>
