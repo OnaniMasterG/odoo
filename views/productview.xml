@@ -56,7 +56,7 @@
       <field name="model">fournisseurr.fournisseurr</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name_fourni"/>
+          <field name="name"/>
           <field name="email_fourni"/>
           <field name="adresse_fourni"/>
           <field name="numerotel_fourni"/>
@@ -72,6 +72,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="date"/>
+          <field name="state"/>
         </tree>
       </field>
     </record>
@@ -168,6 +169,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="state"/>
         </tree>
       </field>
     </record>

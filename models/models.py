@@ -36,7 +36,7 @@ class clientt(models.Model):
 
 class fournisseurr(models.Model):
       _name = 'fournisseurr.fournisseurr'
-      name_fourni = fields.Char()
+      name = fields.Char(string="Name Fournisseur")
       email_fourni = fields.Char()
       adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
@@ -92,15 +92,18 @@ class commandee(models.Model):
       
       @api.depends('id_cmdqte.qte')
       def achatfunc(self):
-        self.state='confirm'
+        test = 0
         for line in self.id_cmdqte :
           if line.qte > 0 and line.price_product > 0 :
+            self.state='confirm'
             qteonchange = line.id_product.qte + line.qte
             self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange ,line.id_product.id))
-            return True
-
           else:
-            raise exceptions.Warning('Price and Quantity must be greater than 0')
+            test = 1
+        if test == 0 :
+          self.state='confirm'
+        else :
+          raise exceptions.Warning('Price and Quantity must be greater than 0')
       
       @api.depends('id_cmdqte.total')
       def _value_cmd(self):
