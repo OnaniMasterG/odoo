@@ -48,9 +48,12 @@ class inventairee(models.Model):
       
       @api.depends('id_inv.realqte')
       def changeqte(self):
+        qteneg =0 
         for line in self.id_inv:
-          self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
-
+          if line.realqte > 0 :
+            self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
+          else : 
+            self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteneg ,line.id_product.id))
           
       
       
@@ -65,6 +68,7 @@ class pdtinventory(models.Model):
       def _value_theoqte(self):
           for line in self:
              line.theoricalqte = line.id_product.qte
+      
                
 
 
@@ -81,6 +85,13 @@ class commandee(models.Model):
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade")
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      
+      @api.depends('id_cmdqte.qte')
+      def achatfunc(self):
+        for line in self.id_cmdqte:
+          if line.qte > 0 :
+            qteonchange = line.id_product.qte + line.qte
+            self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange ,line.id_product.id))
       
       @api.depends('id_cmdqte.total')
       def _value_cmd(self):

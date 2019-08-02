@@ -88,12 +88,15 @@
       </field>
     </record>
 
-   <!--   Commande form -->
+   <!--   Achat form -->
     <record model="ir.ui.view" id="commandee_form">
-      <field name="name">Commande form</field>
+      <field name="name">Achat form</field>
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
-        <form string="cmdForm">
+        <form string="cmdForm" edit="false">
+            <header>
+                <button type="object" name="achatfunc" string="Validate Achat"/>
+            </header> 
             <sheet>
                 <group>
                   <field name="id_fournisseur"/>
@@ -157,7 +160,7 @@
     </record>
 
   <!-- Commande list -->
-    <record model="ir.ui.view" id="chargee_list">
+    <record model="ir.ui.view" id="achat_list">
       <field name="name">Achat list</field>
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
