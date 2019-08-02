@@ -45,7 +45,7 @@ class fournisseurr(models.Model):
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
       date = fields.Date(default=fields.Date.today,string="Date inventaire")
-      id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true')
+      id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
 
       @api.depends('id_inv.realqte')
@@ -85,8 +85,8 @@ class chargee(models.Model):
 class commandee(models.Model):
       _name = 'commandee.commandee'
       name = fields.Char( required=True, index=True, copy=False, default='New')
-      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade")
-      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
+      id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
+      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
       state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
       
@@ -121,15 +121,15 @@ class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'
       id_product = fields.Many2one('productss.productss',ondelete="cascade")
       id_cmd = fields.Many2one('commandee.commandee',ondelete="cascade")
-      qte = fields.Integer()
-      price_product = fields.Float()
+      qte = fields.Integer('Quantité')
+      price_product = fields.Float('Price')
       total = fields.Float(compute="_value_pc", store=True)
-
-      
+     
       @api.depends('price_product','qte')
       def _value_pc(self):
           for line in self:
              line.total = float(line.qte) *  line.price_product 
+     
      
 
       

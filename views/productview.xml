@@ -89,12 +89,12 @@
       </field>
     </record>
 
-   <!--   Achat form -->
+    <!--   Achat form -->
     <record model="ir.ui.view" id="commandee_form">
       <field name="name">Achat form</field>
       <field name="model">commandee.commandee</field>
       <field name="arch" type="xml">
-        <form string="cmdForm" edit="false">
+        <form string="cmdForm">
             <header>
                 <button type="object" name="achatfunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
@@ -108,8 +108,10 @@
                 </group>
             </sheet>
         </form>
+        
       </field>
     </record> 
+
 
 
     <!--   Inventaire form -->
