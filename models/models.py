@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo import exceptions 
 
 class mods(models.Model):
       _name = 'mods.mods'
@@ -48,12 +49,12 @@ class inventairee(models.Model):
       
       @api.depends('id_inv.realqte')
       def changeqte(self):
-        qteneg =0 
         for line in self.id_inv:
           if line.realqte > 0 :
             self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
-          else : 
-            self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteneg ,line.id_product.id))
+          else :
+            raise exceptions.Warning('Quantité négatif') 
+            """ self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(0 ,line.id_product.id)) """
           
       
       
@@ -88,10 +89,14 @@ class commandee(models.Model):
       
       @api.depends('id_cmdqte.qte')
       def achatfunc(self):
-        for line in self.id_cmdqte:
-          if line.qte > 0 :
+        for line in self.id_cmdqte :
+          if line.qte > 0 and line.price_product > 0 :
             qteonchange = line.id_product.qte + line.qte
             self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange ,line.id_product.id))
+            return True
+
+          else:
+            raise exceptions.Warning('Price and Quantity must be greater than 0')
       
       @api.depends('id_cmdqte.total')
       def _value_cmd(self):
