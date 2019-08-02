@@ -43,10 +43,15 @@ class fournisseurr(models.Model):
 
 class inventairee(models.Model):
       _name = 'inventairee.inventairee'
-      name = fields.Char()
+      date = fields.Date(default=fields.Date.today,string="Date inventaire")
       id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true')
+      
+      @api.depends('id_inv.realqte')
+      def changeqte(self):
+        for line in self.id_inv:
+          self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
 
-   
+          
       
       
 class pdtinventory(models.Model):
@@ -59,7 +64,7 @@ class pdtinventory(models.Model):
       @api.depends('id_product.qte')
       def _value_theoqte(self):
           for line in self:
-             line.theoricalqte = self.id_product.qte
+             line.theoricalqte = line.id_product.qte
                
 
 
