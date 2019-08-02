@@ -46,11 +46,13 @@ class inventairee(models.Model):
       _name = 'inventairee.inventairee'
       date = fields.Date(default=fields.Date.today,string="Date inventaire")
       id_inv = fields.One2many('pdtinventory.pdtinventory','id_inv',string="Produits :",required='true')
-      
+      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
+
       @api.depends('id_inv.realqte')
       def changeqte(self):
         for line in self.id_inv:
           if line.realqte > 0 :
+            self.state='confirm'
             self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
           else :
             raise exceptions.Warning('Quantité négatif') 
@@ -86,9 +88,11 @@ class commandee(models.Model):
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade")
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true')
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
       
       @api.depends('id_cmdqte.qte')
       def achatfunc(self):
+        self.state='confirm'
         for line in self.id_cmdqte :
           if line.qte > 0 and line.price_product > 0 :
             qteonchange = line.id_product.qte + line.qte

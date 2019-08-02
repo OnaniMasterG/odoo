@@ -95,7 +95,8 @@
       <field name="arch" type="xml">
         <form string="cmdForm" edit="false">
             <header>
-                <button type="object" name="achatfunc" string="Validate Achat"/>
+                <button type="object" name="achatfunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
                 <group>
@@ -117,7 +118,8 @@
       <field name="arch" type="xml">
         <form string="inventaireForm">
             <header>
-                <button type="object" name="changeqte" string="Validate Inventory"/>
+                <button type="object" name="changeqte" string="Validate Inventory" clas="oe_highlight" states="draft"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header>
             <sheet>
                 <group>
