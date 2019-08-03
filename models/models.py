@@ -74,6 +74,7 @@ class chargee(models.Model):
 class commandee(models.Model):
       _name = 'commandee.commandee'
       name = fields.Char( required=True, index=True, copy=False, default='New')
+      date = fields.Date(default=fields.Date.today,string="Date Achat")
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
@@ -102,7 +103,7 @@ class commandee(models.Model):
 
       @api.model
       def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order') or '/'
+        vals['name'] = self.env['ir.sequence'].next_by_code('achat.seq') or '/'
         return super(commandee, self).create(vals)
   
 
@@ -125,6 +126,7 @@ class ventee(models.Model):
 
       _name = 'ventee.ventee'
       name = fields.Char( required=True, index=True, copy=False)
+      date = fields.Date(default=fields.Date.today,string="Date Vente")
       id_client = fields.Many2one('clientt.clientt',string="client :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_vente',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
@@ -153,6 +155,10 @@ class ventee(models.Model):
           for order in self:
             for line in order.id_cmdqte:
                 self.totalcmd += line.total
+      @api.model
+      def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code('vente.seq') or '/'
+        return super(ventee, self).create(vals)
       
 
 

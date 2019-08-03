@@ -84,7 +84,9 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="date"/>
           <field name="totalcmd"/>
+          <field name="state"/>
         </tree>
       </field>
     </record>
@@ -119,12 +121,11 @@
       <field name="arch" type="xml">
         <form string="cmdForm">
             <header>
-                <button type="object" name="ventefunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
+                <button type="object" name="ventefunc" string="Validate Vente" clas="oe_highlight" states="draft"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
                 <group>
-                  <field name="name"/>
                   <field name="id_client"/>
                 </group>
                 <group>
@@ -143,8 +144,9 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-         
+          <field name="date"/>
           <field name="totalcmd"/>
+          <field name="state"/>
         </tree>
       </field>
     </record>
@@ -201,17 +203,6 @@
       </field>
     </record>
 
-  <!-- Commande list -->
-    <record model="ir.ui.view" id="achat_list">
-      <field name="name">Achat list</field>
-      <field name="model">commandee.commandee</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="state"/>
-        </tree>
-      </field>
-    </record>
 
     <!-- cmdpdct list -->
     <record model="ir.ui.view" id="chargee_list">
