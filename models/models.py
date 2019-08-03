@@ -3,19 +3,8 @@
 from odoo import models, fields, api
 from odoo import exceptions 
 
-class mods(models.Model):
-      _name = 'mods.mods'
-      name = fields.Char()
-      value = fields.Integer()
-      value2 = fields.Float(compute="_value_pc", store=True)
-      description = fields.Text()
- 
-      @api.depends('value')
-      def _value_pc(self):
-          self.value2 = float(self.value) / 100
-      
-      
-    
+
+
 class productss(models.Model):
       _name = 'productss.productss'
       _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
@@ -121,6 +110,7 @@ class cmdqte(models.Model):
       _name = 'cmdqte.cmdqte'
       id_product = fields.Many2one('productss.productss',ondelete="cascade")
       id_cmd = fields.Many2one('commandee.commandee',ondelete="cascade")
+      id_vente = fields.Many2one('ventee.ventee',ondelete="cascade")
       qte = fields.Integer('Quantité')
       price_product = fields.Float('Price')
       total = fields.Float(compute="_value_pc", store=True)
@@ -131,7 +121,38 @@ class cmdqte(models.Model):
              line.total = float(line.qte) *  line.price_product 
      
      
+class ventee(models.Model):
 
+      _name = 'ventee.ventee'
+      name = fields.Char( required=True, index=True, copy=False)
+      id_client = fields.Many2one('clientt.clientt',string="client :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
+      id_cmdqte = fields.One2many('cmdqte.cmdqte','id_vente',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
+      totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
+
+      @api.depends('id_cmdqte.qte')
+      def ventefunc(self):
+        test = 0
+        for line in self.id_cmdqte :
+          if line.qte > line.id_product.qte:
+            test = 1
+            raise exceptions.Warning('Out of stock')  
+          elif line.qte > 0 and line.price_product > 0:
+            self.state='confirm'
+            qteonchange = line.id_product.qte - line.qte
+            self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange ,line.id_product.id))
+          else:
+            test = 1
+        if test == 0 :
+          self.state='confirm'
+        else :
+          raise exceptions.Warning('Price and Quantity must be greater than 0')
+      
+      @api.depends('id_cmdqte.total')
+      def _value_cmd(self):
+          for order in self:
+            for line in order.id_cmdqte:
+                self.totalcmd += line.total
       
 
 

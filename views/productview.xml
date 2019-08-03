@@ -112,6 +112,43 @@
       </field>
     </record> 
 
+     <!--   vente form -->
+    <record model="ir.ui.view" id="vente_form">
+      <field name="name">Vente form</field>
+      <field name="model">ventee.ventee</field>
+      <field name="arch" type="xml">
+        <form string="cmdForm">
+            <header>
+                <button type="object" name="ventefunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+            </header> 
+            <sheet>
+                <group>
+                  <field name="name"/>
+                  <field name="id_client"/>
+                </group>
+                <group>
+                  <field name="id_cmdqte"/>
+                </group>
+            </sheet>
+        </form>
+        
+      </field>
+    </record> 
+
+    <!-- vente list -->
+    <record model="ir.ui.view" id="vente_list">
+      <field name="name">Vente list</field>
+      <field name="model">ventee.ventee</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+         
+          <field name="totalcmd"/>
+        </tree>
+      </field>
+    </record>
+
 
 
     <!--   Inventaire form -->
@@ -190,13 +227,6 @@
       </field>
     </record>
   
-  <!-- Test -->
-    <record model="ir.actions.act_window" id="productss_action_window">
-      <field name="name">List Window</field>
-      <field name="res_model">mods.mods</field>
-      <field name="view_mode">tree,form</field>
-      
-    </record>
 
     <!-- Action Products -->
     <record model="ir.actions.act_window" id="productss_action2_window">
@@ -244,15 +274,18 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+     <!-- Action vente -->
+    <record model="ir.actions.act_window" id="productss_action10_window">
+      <field name="name">Vente Window</field>
+      <field name="res_model">ventee.ventee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     
     <!-- Menu items parent -->
     <menuitem name="productss" id="productss_menu_root"/>
     
-    <menuitem name="Menu" id="productss_menu_1" parent="productss_menu_root"/>
-    
-    <!-- Menu items Child Childs -->
-    <menuitem name="List" id="productss_menu_2_list" parent="productss_menu_1"
-              action="productss_action_window"/>
+  
     
     <!-- Menu items Childs -->
        
@@ -269,7 +302,9 @@
     <menuitem name="Charge" id="productss_menu_8" parent="productss_menu_root"
               action="productss_action8_window"/> 
     <menuitem name="Achat" id="productss_menu_9" parent="productss_menu_root"
-              action="productss_action9_window"/> 
+              action="productss_action9_window"/>
+    <menuitem name="Vente" id="productss_menu_10" parent="productss_menu_root"
+              action="productss_action10_window"/>           
 
 
   </data>
