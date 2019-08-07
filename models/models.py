@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 from odoo import exceptions 
 
 
@@ -9,6 +9,7 @@ class productss(models.Model):
       _name = 'productss.productss'
       _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
       name = fields.Char()
+      image = fields.Binary(string="Image")
       description = fields.Text()
       price =fields.Float() 
       qte = fields.Integer()
@@ -17,7 +18,7 @@ class productss(models.Model):
     
 class clientt(models.Model):
       _name = 'clientt.clientt'
-      name_client = fields.Char()
+      name = fields.Char(string="Nom Client")
       email_client = fields.Char()
       adresse_client = fields.Char()
       numerotel_client = fields.Char(size=13)
@@ -66,7 +67,8 @@ class pdtinventory(models.Model):
 
 class chargee(models.Model):
       _name = 'chargee.chargee'
-      nom = fields.Char()
+      name = fields.Char()
+      date = fields.Date(default=fields.Date.today,string="Date")
       description = fields.Text()
       prix= fields.Float()
 
@@ -163,3 +165,65 @@ class ventee(models.Model):
 
 
       
+ 
+ #Reports
+
+class reportsAchat(models.Model):
+    _name = "reportsachat.reportsachat"
+    _auto = False
+
+    date = fields.Datetime()
+    product_id = fields.Many2one('productss.productss', 'Product')
+    fourni_id = fields.Many2one('fournisseurr.fournisseurr', 'Fournisseur')
+    price_total = fields.Float()
+    total_product = fields.Float()
+
+    @api.model_cr
+    def init(self):
+        
+        tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute(""" CREATE or REPLACE VIEW reportsachat_reportsachat 
+        as SELECT min(c.id) as id , p.date as date , p.id_fournisseur 
+        as fourni_id,p.totalcmd as price_total,c.id_product as product_id , c.total as total_product
+        FROM cmdqte_cmdqte c join commandee_commandee p on (c.id_cmd=p.id) 
+        GROUP BY p.id_fournisseur, c.total,p.date,p.totalcmd,c.id_product """)
+
+
+class reportsVente(models.Model):
+    _name = "reportsvente.reportsvente"
+    _auto = False
+
+    date = fields.Datetime()
+    product_id = fields.Many2one('productss.productss', 'Product')
+    client_id = fields.Many2one('clientt.clientt', 'Client')
+    price_total = fields.Float()
+    total_product = fields.Float()
+
+    @api.model_cr
+    def init(self):
+        
+        tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute(""" CREATE or REPLACE VIEW reportsvente_reportsvente 
+        as SELECT min(c.id) as id,p.date as date,p.id_client 
+        as client_id,p.totalcmd as price_total,c.id_product as product_id ,c.total as total_product
+        FROM cmdqte_cmdqte c join ventee_ventee p on (c.id_vente=p.id) 
+        GROUP BY p.id_client, c.total,p.date,p.totalcmd,c.id_product """)
+
+class reportsCharge(models.Model):
+    _name = "reportscharge.reportscharge"
+    _auto = False
+
+    date = fields.Datetime()
+    prix = fields.Float()
+
+    @api.model_cr
+    def init(self):
+        
+        tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute(""" CREATE or REPLACE VIEW reportscharge_reportscharge 
+        as SELECT min(id) as id,date,prix
+        FROM chargee_chargee
+        GROUP BY date, prix """)
+
+
+  
