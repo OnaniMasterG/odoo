@@ -136,6 +136,7 @@
         <form string="cmdForm">
             <header>
                 <button type="object" name="achatfunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
+                <button type="object" name="achatrefund" string="Refund" clas="oe_highlight" states="confirm"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
@@ -159,6 +160,7 @@
         <form string="cmdForm">
             <header>
                 <button type="object" name="ventefunc" string="Validate Vente" clas="oe_highlight" states="draft"/>
+                <button type="object" name="venterefund" string="Refund" clas="oe_highlight" states="confirm"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
@@ -353,7 +355,7 @@
             <field name="name">product.month.pivot</field>
             <field name="model">reportsachat.reportsachat</field>
             <field name="arch" type="xml">
-                <pivot string="Purchase Orders Statistics" disable_linking="True">
+                <pivot string="Achat" disable_linking="True">
                     <field name="fourni_id" type="row"/>
                     <field name="date" interval="month" type="col"/>
                     <field name="total_product" type="measure"/>

@@ -80,7 +80,7 @@ class commandee(models.Model):
       id_fournisseur = fields.Many2one('fournisseurr.fournisseurr',string="Fournisseur :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_cmd',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
-      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
+      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),('return', 'Return'),], default="draft")
       
       @api.depends('id_cmdqte.qte')
       def achatfunc(self):
@@ -107,6 +107,22 @@ class commandee(models.Model):
       def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code('achat.seq') or '/'
         return super(commandee, self).create(vals)
+
+      @api.depends('id_cmdqte.qte','totalcmd')
+      def achatrefund(self):
+            test = 0
+            for line in self.id_cmdqte :
+              if line.qte > line.id_product.qte:
+                test = 1
+                raise exceptions.Warning('Out of stock') 
+            
+            if test == 0 :
+              self.state='return'
+              for line in self.id_cmdqte :
+                qteonchange = line.id_product.qte - line.qte
+                self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange  ,line.id_product.id))
+            self._cr.execute("UPDATE commandee_commandee SET totalcmd=%s where id=%s",(0 ,self.id))
+            self._cr.execute("UPDATE cmdqte_cmdqte SET total=%s where id_cmd=%s",(0 ,self.id))
   
 
 class cmdqte(models.Model):
@@ -132,7 +148,7 @@ class ventee(models.Model):
       id_client = fields.Many2one('clientt.clientt',string="client :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('cmdqte.cmdqte','id_vente',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
-      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
+      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),('return', 'Return')], default="draft")
 
       @api.depends('id_cmdqte.qte')
       def ventefunc(self):
@@ -151,6 +167,15 @@ class ventee(models.Model):
           self.state='confirm'
         else :
           raise exceptions.Warning('Price and Quantity must be greater than 0')
+
+      @api.depends('id_cmdqte.qte','totalcmd')
+      def venterefund(self):
+            self.state='return'
+            for line in self.id_cmdqte :
+                qteonchange = line.id_product.qte + line.qte
+                self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange ,line.id_product.id))
+            self._cr.execute("UPDATE ventee_ventee SET totalcmd=%s where id=%s",(0 ,self.id))
+            self._cr.execute("UPDATE cmdqte_cmdqte SET total=%s where id_vente=%s",(0 ,self.id))
       
       @api.depends('id_cmdqte.total')
       def _value_cmd(self):
