@@ -135,8 +135,9 @@
       <field name="arch" type="xml">
         <form string="cmdForm">
             <header>
-                <button type="object" name="achatfunc" string="Validate Achat" clas="oe_highlight" states="draft"/>
-                <button type="object" name="achatrefund" string="Refund" clas="oe_highlight" states="confirm"/>
+                <button type="object" name="achatfunc" string="Validate Achat" class="oe_highlight" states="draft"/>
+                <button type="object" name="achatrefund" string="Refund" class="oe_highlight" states="confirm"/>
+                <button name="print" string="Print" type="object" class="oe_highlight"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
@@ -159,8 +160,8 @@
       <field name="arch" type="xml">
         <form string="cmdForm">
             <header>
-                <button type="object" name="ventefunc" string="Validate Vente" clas="oe_highlight" states="draft"/>
-                <button type="object" name="venterefund" string="Refund" clas="oe_highlight" states="confirm"/>
+                <button type="object" name="ventefunc" string="Validate Vente" class="oe_highlight" states="draft"/>
+                <button type="object" name="venterefund" string="Refund" class="oe_highlight" states="confirm"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>
@@ -199,7 +200,7 @@
       <field name="arch" type="xml">
         <form string="inventaireForm">
             <header>
-                <button type="object" name="changeqte" string="Validate Inventory" clas="oe_highlight" states="draft"/>
+                <button type="object" name="changeqte" string="Validate Inventory" class="oe_highlight" states="draft"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header>
             <sheet>

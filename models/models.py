@@ -123,6 +123,10 @@ class commandee(models.Model):
                 self._cr.execute("UPDATE productss_productss SET qte=%s where id=%s",(qteonchange  ,line.id_product.id))
             self._cr.execute("UPDATE commandee_commandee SET totalcmd=%s where id=%s",(0 ,self.id))
             self._cr.execute("UPDATE cmdqte_cmdqte SET total=%s where id_cmd=%s",(0 ,self.id))
+      
+      @api.multi
+      def print(self):
+                return self.env.ref('purchase.report_purchase_quotation').report_action(self)
   
 
 class cmdqte(models.Model):
