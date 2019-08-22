@@ -137,7 +137,6 @@
             <header>
                 <button type="object" name="achatfunc" string="Validate Achat" class="oe_highlight" states="draft"/>
                 <button type="object" name="achatrefund" string="Refund" class="oe_highlight" states="confirm"/>
-                <button name="print" string="Print" type="object" class="oe_highlight"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
             <sheet>

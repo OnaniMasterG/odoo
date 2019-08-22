@@ -1,0 +1,33 @@
+
+<odoo>
+
+<template id="report_vente">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Report achat</h2>
+                    <p>sell number  is <span t-field="o.name"/></p>
+
+                    <table style="width:100%">
+                    <tr>
+                        <th>Client</th>
+                        
+                        <th>total</th>
+                    </tr>
+                    <tr>
+                        <td> <span t-field="o.id_client"/></td>
+                        <td><span t-field="o.totalcmd" /> DH</td> 
+                        
+                    </tr>
+                   
+                    </table>
+                    
+                
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+</odoo>
