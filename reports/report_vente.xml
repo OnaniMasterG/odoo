@@ -1,29 +1,66 @@
 
 <odoo>
-
 <template id="report_vente">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h2>Report achat</h2>
-                    <p>sell number  is <span t-field="o.name"/></p>
+                    <h2>Report vente</h2>
+                    <p>vente number  is <span t-field="o.name"/></p>
 
                     <table style="width:100%">
                     <tr>
                         <th>Client</th>
                         
-                        <th>total</th>
+                        <th>Total</th>
                     </tr>
                     <tr>
-                        <td> <span t-field="o.id_client"/></td>
-                        <td><span t-field="o.totalcmd" /> DH</td> 
                         
+                        <td> <span t-field="o.id_client"/></td>
+                        <td><span t-field="o.totalcmd"/> DH</td>      
                     </tr>
+                </table>
+                <tr><p>   </p></tr>
+                <tr><p>   </p></tr>
+                <tr><p>   </p></tr>
+                <table style="width:100%"  class="table table-bordered">
+                   <tr> 
+                        <th></th>
+                        <th>Produit</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                   </tr>
+                   <tr t-foreach="o.id_cmdqte" t-as="val">
+                     <span t-if="o.id==val.id_vente.id">
+                     <td>
+                     <img t-att-src="'data:image/png;base64,%s' % to_text(val.id_product.image)" style="width: 150px;height: 100px;"/>
+                     </td>
+                     <td>
+                     <span t-field="val.id_product"/>
+                     </td>
+                     <td>
+                     <span t-field="val.qte"/>
+                     </td>
+                     <td>
+                     <span t-field="val.price_product"/>
+                     </td>
+                     <td>
+                     <span t-field="val.total"/>
+                     </td>
+                     </span>
+                   </tr> 
+                   <tr>
+                        <td><p>  </p></td>
+                        <td><p>  </p></td>
+                        <td><p>  </p></td>
+                        <td><p>  </p></td>
+                        <td><span t-field="o.totalcmd"/></td>
+                   </tr>
                    
                     </table>
                     
-                
+
                 </div>
             </t>
         </t>

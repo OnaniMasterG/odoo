@@ -29,6 +29,7 @@
         'reports/report.xml',
         'reports/report_achat.xml',
         'reports/report_vente.xml',
+        'sequence/sequences.xml',
         #'views/templates.xml',
     ],
     # only loaded in demonstration mode

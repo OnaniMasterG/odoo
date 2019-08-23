@@ -3,7 +3,7 @@
 
 <report
     id="report_achat"
-    model="commandee.commandee"
+    model="x.commande"
     string="achat "
     report_type="qweb-pdf"
     name="mods.report_achat"
@@ -14,7 +14,7 @@
 
 <report
     id="report_vente"
-    model="ventee.ventee"
+    model="x.vente"
     string="vente "
     report_type="qweb-pdf"
     name="mods.report_vente"
