@@ -7,7 +7,7 @@ from odoo import exceptions
 
 class x_product(models.Model):
       _name = 'x.product'
-      _sql_constraints = [('id_product', 'unique(id_product)','Produit existe déja'),]
+      _sql_constraints = [('name', 'unique(name)','Produit existe déja'),]
       name = fields.Char()
       image = fields.Binary(string="Image")
       description = fields.Text()
@@ -46,9 +46,8 @@ class x_inventaire(models.Model):
             self._cr.execute("UPDATE x_product SET qte=%s where id=%s",(line.realqte ,line.id_product.id))
           else :
             raise exceptions.Warning('Quantité négatif') 
-            """ self._cr.execute("UPDATE x_product SET qte=%s where id=%s",(0 ,line.id_product.id)) """
-          
-      
+           
+        
       
 class x_produitinventaire(models.Model):
       _name = 'x.produitinventaire'
