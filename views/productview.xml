@@ -1,6 +1,7 @@
 <odoo>
   <data>
 
+
   <!-- Product kanban -->
   <record model="ir.ui.view" id="productss_kanb">
       <field name="name">Products kanban</field>
@@ -23,11 +24,11 @@
                                 </strong>
                                 <div name="tags"/>
                                 <ul>
-                                    <li>Price: <field name="price"></field></li>
+                                    <li>Prix: <field name="price"></field></li>
                                 </ul>
                                 <div name="tags"/>
                                 <ul>
-                                    <li>Quantity: <field name="qte"></field></li>
+                                    <li>Quantité: <field name="qte"></field></li>
                                 </ul>
                             </div>
                         </div>
@@ -113,7 +114,7 @@
       <field name="arch" type="xml">
         <form string="cmdForm">
             <header>
-                <button type="object" name="achatfunc" string="Validate Achat" class="oe_highlight" states="draft"/>
+                <button type="object" name="achatfunc" string="Valider Achat" class="oe_highlight" states="draft"/>
                 <button type="object" name="achatrefund" string="Retour" class="oe_highlight" states="confirm"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
@@ -137,7 +138,7 @@
       <field name="arch" type="xml">
         <form string="cmdForm">
             <header>
-                <button type="object" name="ventefunc" string="Validate Vente" class="oe_highlight" states="draft"/>
+                <button type="object" name="ventefunc" string="Valider Vente" class="oe_highlight" states="draft"/>
                 <button type="object" name="venterefund" string="Retour" class="oe_highlight" states="confirm"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header> 
@@ -177,7 +178,7 @@
       <field name="arch" type="xml">
         <form string="inventaireForm">
             <header>
-                <button type="object" name="changeqte" string="Validate Inventory" class="oe_highlight" states="draft"/>
+                <button type="object" name="changeqte" string="Valider Inventory" class="oe_highlight" states="draft"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header>
             <sheet>

@@ -1,22 +1,22 @@
 
 <odoo>
-<template id="report_achat">
+<template id="bl_achat">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h2>Report achat</h2>
-                    <p>achat number  is <span t-field="o.name"/></p>
+                    <h2>Bon d'achat</h2>
+                    <p><span t-field="o.name"/></p>
 
                     <table style="width:100%">
                     <tr>
                         <th>Fournissuer</th>
                         
-                        <th>Total</th>
+                        
                     </tr>
                     <tr>
                         <td> <span t-field="o.id_fournisseur"/></td>
-                        <td><span t-field="o.totalcmd"/> DH</td> 
+                        
                         
                     </tr>
                     </table>
@@ -29,8 +29,7 @@
                         <th></th>
                         <th>Produit</th>
                         <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total</th>
+                        
                    </tr>
                    <tr t-foreach="o.id_cmdqte" t-as="val">
                      <span t-if="o.id==val.id_cmd.id">
@@ -43,21 +42,10 @@
                      <td>
                      <span t-field="val.qte"/>
                      </td>
-                     <td>
-                     <span t-field="val.price_product"/>
-                     </td>
-                     <td>
-                     <span t-field="val.total"/>
-                     </td>
+                                      
                      </span>
                    </tr> 
-                   <tr>
-                        <td><p>  </p></td>
-                        <td><p>  </p></td>
-                        <td><p>  </p></td>
-                        <td><p>  </p></td>
-                        <td><span t-field="o.totalcmd"/></td>
-                   </tr>
+                   
                    
                     </table>
 

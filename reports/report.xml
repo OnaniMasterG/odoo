@@ -1,24 +1,43 @@
 
 <odoo>
 
-<report
-    id="report_achat"
+
+    <report
+    id="bl_achat"
     model="x.commande"
-    string="achat "
+    string="bon d'achat "
     report_type="qweb-pdf"
-    name="mods.report_achat"
-    file="mods.report_achat"
+    name="mods.bl_achat"
+    file="mods.bl_achat"
     />
 
 
 
 <report
-    id="report_vente"
+    id="facture_vente"
     model="x.vente"
-    string="vente "
+    string="facture "
     report_type="qweb-pdf"
-    name="mods.report_vente"
-    file="mods.report_vente"
+    name="mods.facture_vente"
+    file="mods.facture_vente"
+    />
+
+    <report
+    id="bl_vente"
+    model="x.vente"
+    string="bon de livraison "
+    report_type="qweb-pdf"
+    name="mods.bl_vente"
+    file="mods.bl_vente"
+    />
+
+    <report
+    id="devis_vente"
+    model="x.vente"
+    string="devis"
+    report_type="qweb-pdf"
+    name="mods.devis_vente"
+    file="mods.devis_vente"
     />
 
 
