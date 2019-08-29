@@ -419,7 +419,7 @@
               action="productss_action10_window"/>
 
 
-    <menuitem name="Products" id="productss_menu_2" parent="productss_menu_root"
+    <menuitem name="Produits" id="productss_menu_2" parent="productss_menu_root"
               action="productss_action2_window"/>
 
     <menuitem name="Client" id="productss_menu_4" parent="productss_menu_root"
@@ -432,7 +432,7 @@
     <menuitem name="Charge" id="productss_menu_8" parent="productss_menu_root"
               action="productss_action8_window"/> 
 
-    <menuitem name="Reports" id="productss_menu_11" parent="productss_menu_root"/>
+    <menuitem name="Rapports" id="productss_menu_11" parent="productss_menu_root"/>
               <!-- Menu items Childs  Report--> 
           <menuitem name="Achat" id="mods.menu_11_achat" parent="productss_menu_11"
                     action="productss_action11_window"/>

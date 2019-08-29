@@ -1,2 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mods_mods,mods.mods,model_mods_mods,1,1,1,1
+access_x_product,x_product.x_product,model_x_product,,1,1,1,1
+access_x_client,x_client.x_client,model_x_client,,1,1,1,1
+access_x_fournisseur,x_fournisseur.x_fournisseur,model_x_fournisseur,,1,1,1,1
+access_x_inventaire,x_inventaire.x_inventaire,model_x_inventaire,,1,1,1,1
+access_x_produitinventaire,x_produitinventaire.x_produitinventaire,model_x_produitinventaire,,1,1,1,1
+access_x_charge,x_charge.x_charge,model_x_charge,,1,1,1,1
+access_x_commande,x_commande.x_commande,model_x_commande,,1,1,1,1
+access_x_cmdqte,x_cmdqte.x_cmdqte,model_x_cmdqte,,1,1,1,1
+access_x_vente,x_vente.x_vente,model_x_vente,,1,1,1,1
+access_x_reportsachat,x_reportsachat.x_reportsachat,model_x_reportsachat,,1,1,1,1
+access_x_reportsvente,x_reportsvente.x_reportsvente,model_x_reportsvente,,1,1,1,1
+access_x_reportscharge,x_reportscharge.x_reportscharge,model_x_reportscharge,,1,1,1,1

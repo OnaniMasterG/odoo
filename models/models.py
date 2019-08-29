@@ -8,11 +8,12 @@ from odoo import exceptions
 class x_product(models.Model):
       _name = 'x.product'
       _sql_constraints = [('name', 'unique(name)','Produit existe déja'),]
-      name = fields.Char()
+      name = fields.Char(string="Nom Produit")
+      reference=fields.Char()
       image = fields.Binary(string="Image")
       description = fields.Text()
-      price =fields.Float() 
-      qte = fields.Integer()
+      price =fields.Float(string="Prix") 
+      qte = fields.Integer(string="Quantité")
 
       
     
@@ -26,7 +27,7 @@ class x_client(models.Model):
 
 class x_fournisseur(models.Model):
       _name = 'x.fournisseur'
-      name = fields.Char(string="Name Fournisseur")
+      name = fields.Char(string="Nom Fournisseur")
       email_fourni = fields.Char()
       adresse_fourni = fields.Char()
       numerotel_fourni = fields.Char(size=13)
@@ -36,7 +37,7 @@ class x_inventaire(models.Model):
       _name = 'x.inventaire'
       date = fields.Date(default=fields.Date.today,string="Date inventaire")
       id_inv = fields.One2many('x.produitinventaire','id_inv',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
-      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),], default="draft")
+      state= fields.Selection(string="State",selection=[ ('draft', 'Brouillon'),('confirm', 'Confirmé'),], default="draft")
 
       @api.depends('id_inv.realqte')
       def changeqte(self):
@@ -66,7 +67,7 @@ class x_produitinventaire(models.Model):
 
 class x_charge(models.Model):
       _name = 'x.charge'
-      name = fields.Char()
+      name = fields.Char(string="Nom Charge")
       date = fields.Date(default=fields.Date.today,string="Date")
       description = fields.Text()
       prix= fields.Float()
@@ -79,7 +80,7 @@ class x_commande(models.Model):
       id_fournisseur = fields.Many2one('x.fournisseur',string="Fournisseur :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('x.cmdqte','id_cmd',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
-      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),('return', 'Return'),], default="draft")
+      state= fields.Selection(string="State",selection=[ ('draft', 'Brouillon'),('confirm', 'Confirmé'),('return', 'Retourné'),], default="draft")
       
       @api.depends('id_cmdqte.qte')
       def achatfunc(self):
@@ -94,7 +95,7 @@ class x_commande(models.Model):
         if test == 0 :
           self.state='confirm'
         else :
-          raise exceptions.Warning('Price and Quantity must be greater than 0')
+          raise exceptions.Warning('Le prix et la quantité doivent être supérieur a 0')
       
       @api.depends('id_cmdqte.total')
       def _value_cmd(self):
@@ -113,7 +114,7 @@ class x_commande(models.Model):
             for line in self.id_cmdqte :
               if line.qte > line.id_product.qte:
                 test = 1
-                raise exceptions.Warning('Out of stock') 
+                raise exceptions.Warning('Stock épuisé') 
             
             if test == 0 :
               self.state='return'
@@ -134,8 +135,8 @@ class x_cmdqte(models.Model):
       id_cmd = fields.Many2one('x.commande',ondelete="cascade")
       id_vente = fields.Many2one('x.vente',ondelete="cascade")
       qte = fields.Integer('Quantité')
-      price_product = fields.Float('Price')
-      total = fields.Float(compute="_value_pc", store=True)
+      price_product = fields.Float('Prix Unitaire')
+      total = fields.Float(string='Sous Total',compute="_value_pc", store=True)
      
       @api.depends('price_product','qte')
       def _value_pc(self):
@@ -146,12 +147,12 @@ class x_cmdqte(models.Model):
 class x_vente(models.Model):
 
       _name = 'x.vente'
-      name = fields.Char( required=True, index=True, copy=False)
+      name = fields.Char( required=True, index=True, copy=False,string="Nom Vente")
       date = fields.Date(default=fields.Date.today,string="Date Vente")
       id_client = fields.Many2one('x.client',string="client :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('x.cmdqte','id_vente',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
       totalcmd =  fields.Float(compute="_value_cmd", store=True)
-      state= fields.Selection(string="State",selection=[ ('draft', 'Draft'),('confirm', 'Confirm'),('return', 'Return')], default="draft")
+      state= fields.Selection(string="State",selection=[ ('draft', 'Brouillon'),('confirm', 'Confirmé'),('return', 'Retuourné')], default="draft")
 
       @api.depends('id_cmdqte.qte')
       def ventefunc(self):
@@ -159,7 +160,7 @@ class x_vente(models.Model):
         for line in self.id_cmdqte :
           if line.qte > line.id_product.qte:
             test = 1
-            raise exceptions.Warning('Out of stock')  
+            raise exceptions.Warning('Stock épuisé')  
           elif line.qte > 0 and line.price_product > 0:
             self.state='confirm'
             qteonchange = line.id_product.qte - line.qte
@@ -169,7 +170,7 @@ class x_vente(models.Model):
         if test == 0 :
           self.state='confirm'
         else :
-          raise exceptions.Warning('Price and Quantity must be greater than 0')
+          raise exceptions.Warning('Le prix et la quantité doivent être supérieur a 0')
 
       @api.depends('id_cmdqte.qte','totalcmd')
       def venterefund(self):
