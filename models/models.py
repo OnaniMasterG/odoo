@@ -52,7 +52,7 @@ class x_inventaire(models.Model):
       
 class x_produitinventaire(models.Model):
       _name = 'x.produitinventaire'
-      id_product = fields.Many2one('x.product',ondelete="cascade")
+      id_product = fields.Many2one('x.product',ondelete="cascade",string="produit")
       id_inv = fields.Many2one('x.inventaire',ondelete="cascade")
       theoricalqte = fields.Integer(string="Quantité Théorique :",compute="_value_theoqte", store=True)
       realqte = fields.Integer(string="Quantité Réel :")
@@ -131,7 +131,7 @@ class x_commande(models.Model):
 
 class x_cmdqte(models.Model):
       _name = 'x.cmdqte'
-      id_product = fields.Many2one('x.product',ondelete="cascade")
+      id_product = fields.Many2one('x.product',ondelete="cascade",string="produit")
       id_cmd = fields.Many2one('x.commande',ondelete="cascade")
       id_vente = fields.Many2one('x.vente',ondelete="cascade")
       qte = fields.Integer('Quantité')
