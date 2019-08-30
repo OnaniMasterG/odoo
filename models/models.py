@@ -28,8 +28,8 @@ class x_client(models.Model):
 class x_fournisseur(models.Model):
       _name = 'x.fournisseur'
       name = fields.Char(string="Nom Fournisseur")
-      email_fourni = fields.Char()
-      adresse_fourni = fields.Char()
+      email_fourni = fields.Char(string="Email Fournisseur")
+      adresse_fourni = fields.Char(string="Adresse Fournisseur")
       numerotel_fourni = fields.Char(size=13)
       
 
@@ -75,11 +75,11 @@ class x_charge(models.Model):
 # Cree commande avec un nom
 class x_commande(models.Model):
       _name = 'x.commande'
-      name = fields.Char( required=True, index=True, copy=False, default='New')
+      name = fields.Char( required=True, index=True, copy=False, default='New',string="Nom Achat")
       date = fields.Date(default=fields.Date.today,string="Date Achat")
       id_fournisseur = fields.Many2one('x.fournisseur',string="Fournisseur :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('x.cmdqte','id_cmd',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
-      totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      totalcmd =  fields.Float(compute="_value_cmd", store=True,string="Total")
       state= fields.Selection(string="State",selection=[ ('draft', 'Brouillon'),('confirm', 'Confirmé'),('return', 'Retourné'),], default="draft")
       
       @api.depends('id_cmdqte.qte')
@@ -151,7 +151,7 @@ class x_vente(models.Model):
       date = fields.Date(default=fields.Date.today,string="Date Vente")
       id_client = fields.Many2one('x.client',string="client :",required='true',ondelete="cascade",readonly=True,states={'draft': [('readonly', False)]})
       id_cmdqte = fields.One2many('x.cmdqte','id_vente',string="Produits :",required='true',states={'confirm': [('readonly', True)]})
-      totalcmd =  fields.Float(compute="_value_cmd", store=True)
+      totalcmd =  fields.Float(compute="_value_cmd", store=True,string="Total")
       state= fields.Selection(string="State",selection=[ ('draft', 'Brouillon'),('confirm', 'Confirmé'),('return', 'Retuourné')], default="draft")
 
       @api.depends('id_cmdqte.qte')
